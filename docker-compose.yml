@@ -1,0 +1,27 @@
+# for development
+services:
+  db:
+    image: mysql:8.4
+    container_name: ecomm_db_dev
+    # restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password  # Root user password
+      # MYSQL_DATABASE: dev_db               # Default database to create
+      MYSQL_USER: dev_user                 # Custom user for development
+      MYSQL_PASSWORD: dev_password         # Password for the custom user
+    ports:
+      - "127.0.0.1:6033:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    #   interval: 5s
+    #   timeout: 10s
+    #   retries: 5
+  # api:
+  #   depends_on:
+  #     - db
+
+
+volumes:
+  mysql_data:
