@@ -6,11 +6,12 @@ func (app *application) routes() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	// Product routes
-	mux.HandleFunc("GET /products/view/{id}", app.productView)
-	mux.HandleFunc("POST /products/create", app.productCreate)
-	mux.HandleFunc("POST /products/edit/{id}", app.productEdit)
-	mux.HandleFunc("GET /products/delete/{id}", app.productDelete)
+	mux.HandleFunc("GET /products/{$}", app.productAll)
 	mux.HandleFunc("GET /products/latest", app.productLatest)
+	mux.HandleFunc("GET /products/{id}", app.productView)
+	mux.HandleFunc("DELETE /products/{id}", app.productDelete)
+	mux.HandleFunc("POST /products/edit/{id}", app.productEdit)
+	mux.HandleFunc("POST /products/add", app.productAdd)
 
 	return mux
 }
