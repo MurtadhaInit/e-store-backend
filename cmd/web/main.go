@@ -7,14 +7,14 @@ import (
 	"net/http"
 	"os"
 
-	"e-store-backend/internal/models"
+	"e-store-backend/internal/repository"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type application struct {
-	logger   *slog.Logger
-	products *models.ProductModel
+	logger  *slog.Logger
+	queries *repository.Queries
 }
 
 func main() {
@@ -39,9 +39,11 @@ func main() {
 	}
 	defer db.Close()
 
+	queries := repository.New(db)
+
 	app := &application{
-		logger:   logger,
-		products: &models.ProductModel{DB: db},
+		logger:  logger,
+		queries: queries,
 	}
 
 	app.logger.Info("Starting server", slog.String("addr", cfg.addr))
