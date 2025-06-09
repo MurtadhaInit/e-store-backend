@@ -1,0 +1,16 @@
+services:
+  db:
+    restart: unless-stopped
+    # In production, the database doesn't need to bind a port to the host (unless connecting directly to the DB in prod)
+    # This is valid (and recommended) syntax as per Docker Compose docs.
+    ports: !reset []
+  api:
+    restart: unless-stopped
+    # healthcheck:
+    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4210/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
+  # load-balancer:
+  #   image: traefik

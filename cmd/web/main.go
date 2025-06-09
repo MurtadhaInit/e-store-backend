@@ -20,11 +20,9 @@ type application struct {
 func main() {
 	type config struct {
 		addr string
-		dsn  string
 	}
 	var cfg config
 	flag.StringVar(&cfg.addr, "addr", ":4210", "HTTP network address")
-	flag.StringVar(&cfg.dsn, "dsn", "dev_user:dev_password@tcp(127.0.0.1:6033)/ecomm?parseTime=true", "MySQL data source name")
 	flag.Parse()
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
@@ -32,7 +30,13 @@ func main() {
 		Level:     slog.LevelDebug,
 	}))
 
-	db, err := openDB(cfg.dsn)
+	dsn, dsn_set := os.LookupEnv("DSN")
+	if !dsn_set || dsn == "" {
+		logger.Error("DSN environment variable not set. Could not connect to the database.")
+		os.Exit(1)
+	}
+
+	db, err := openDB(dsn)
 	if err != nil {
 		logger.Error(err.Error())
 		os.Exit(1)

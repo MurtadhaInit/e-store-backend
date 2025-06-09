@@ -1,10 +1,14 @@
-FROM golang:1.24-alpine AS build
-WORKDIR /app
+FROM golang:1.24-bookworm AS build
+WORKDIR /build
+COPY go.mod go.sum ./
+RUN go mod download
 COPY . .
-RUN go build -o bin/ .
+# To produce static binaries
+ENV CGO_ENABLED=0
+# TODO: why can't `go build` recursively search directories for Go files?
+RUN go build -o ./bin ./cmd/**
 
 FROM scratch
 WORKDIR /app
-COPY --from=build /app/bin/ ./
-EXPOSE 8080
-CMD [ "./bin/main" ]
+COPY --from=build /build/bin/ ./
+CMD [ "./bin" ]
