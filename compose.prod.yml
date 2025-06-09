@@ -2,7 +2,6 @@ services:
   db:
     restart: unless-stopped
     # In production, the database doesn't need to bind a port to the host (unless connecting directly to the DB in prod)
-    # This is valid (and recommended) syntax as per Docker Compose docs.
     ports: !reset []
   api:
     restart: unless-stopped
