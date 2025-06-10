@@ -37,7 +37,14 @@ func (app *application) productDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) productLatest(w http.ResponseWriter, r *http.Request) {
-
+	// products, err := app.queries.GetLatestProducts(r.Context(), 10)
+	// if err != nil {
+	// 	app.serverError(w, r, err)
+	// }
+	// for _, product := range products {
+	// 	j, _ := json.Marshal(product)
+	// 	w.Write(j)
+	// }
 }
 
 func (app *application) productAll(w http.ResponseWriter, r *http.Request) {

@@ -117,6 +117,45 @@ func (q *Queries) GetAllProducts(ctx context.Context) ([]Product, error) {
 	return items, nil
 }
 
+const getLatestProducts = `-- name: GetLatestProducts :many
+SELECT product_id, title, product_description, category, price, image_url, stock_quantity, created_at, updated_at FROM products
+ORDER BY created_at DESC
+LIMIT ?
+`
+
+func (q *Queries) GetLatestProducts(ctx context.Context, limit int32) ([]Product, error) {
+	rows, err := q.db.QueryContext(ctx, getLatestProducts, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Product
+	for rows.Next() {
+		var i Product
+		if err := rows.Scan(
+			&i.ProductID,
+			&i.Title,
+			&i.ProductDescription,
+			&i.Category,
+			&i.Price,
+			&i.ImageUrl,
+			&i.StockQuantity,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getProduct = `-- name: GetProduct :one
 SELECT product_id, title, product_description, category, price, image_url, stock_quantity, created_at, updated_at FROM products
 WHERE product_id = ?

@@ -1,6 +1,11 @@
 -- name: GetAllProducts :many
 SELECT * FROM products;
 
+-- name: GetLatestProducts :many
+SELECT * FROM products
+ORDER BY created_at DESC
+LIMIT ?;
+
 -- name: GetProduct :one
 SELECT * FROM products
 WHERE product_id = ?
