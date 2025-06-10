@@ -22,6 +22,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
     depends_on:
       db:
         condition: service_healthy
@@ -32,6 +33,8 @@ services:
       - 4210:4210
     networks:
       - ecomm-net
+    volumes:
+      - ./:/app:rw
 
 networks:
   ecomm-net:

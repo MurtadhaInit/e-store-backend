@@ -1,14 +1,20 @@
-FROM golang:1.24-bookworm AS build
-WORKDIR /build
+FROM golang:1.24-bookworm AS base
+WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
+
+FROM base AS dev
+RUN go install github.com/air-verse/air@latest
+CMD ["air", "-c", ".air.toml"]
+
+FROM base AS build
 COPY . .
 # To produce static binaries
 ENV CGO_ENABLED=0
 # TODO: why can't `go build` recursively search directories for Go files?
 RUN go build -o ./bin ./cmd/**
 
-FROM scratch
+FROM scratch AS prod
 WORKDIR /app
-COPY --from=build /build/bin/ ./
+COPY --from=build /app/bin/ ./
 CMD [ "./bin" ]
