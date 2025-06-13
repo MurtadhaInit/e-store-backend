@@ -17,12 +17,12 @@ INSERT INTO products (
 `
 
 type AddProductParams struct {
-	Title              string
-	ProductDescription string
-	Category           sql.NullInt32
-	Price              string
-	ImageUrl           string
-	StockQuantity      int32
+	Title              string        `json:"title"`
+	ProductDescription string        `json:"product_description"`
+	Category           sql.NullInt32 `json:"category"`
+	Price              string        `json:"price"`
+	ImageUrl           string        `json:"image_url"`
+	StockQuantity      int32         `json:"stock_quantity"`
 }
 
 func (q *Queries) AddProduct(ctx context.Context, arg AddProductParams) (sql.Result, error) {
@@ -59,13 +59,13 @@ WHERE product_id = ?
 `
 
 type EditProductParams struct {
-	Title              string
-	ProductDescription string
-	Category           sql.NullInt32
-	Price              string
-	ImageUrl           string
-	StockQuantity      int32
-	ProductID          int32
+	Title              string        `json:"title"`
+	ProductDescription string        `json:"product_description"`
+	Category           sql.NullInt32 `json:"category"`
+	Price              string        `json:"price"`
+	ImageUrl           string        `json:"image_url"`
+	StockQuantity      int32         `json:"stock_quantity"`
+	ProductID          int32         `json:"product_id"`
 }
 
 func (q *Queries) EditProduct(ctx context.Context, arg EditProductParams) (sql.Result, error) {

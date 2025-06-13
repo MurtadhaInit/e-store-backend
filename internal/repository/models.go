@@ -34,8 +34,8 @@ func (e *OrdersOrderStatus) Scan(src interface{}) error {
 }
 
 type NullOrdersOrderStatus struct {
-	OrdersOrderStatus OrdersOrderStatus
-	Valid             bool // Valid is true if OrdersOrderStatus is not NULL
+	OrdersOrderStatus OrdersOrderStatus `json:"orders_order_status"`
+	Valid             bool              `json:"valid"` // Valid is true if OrdersOrderStatus is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -57,66 +57,66 @@ func (ns NullOrdersOrderStatus) Value() (driver.Value, error) {
 }
 
 type Cart struct {
-	CartID     int32
-	CustomerID sql.NullInt32
-	CreatedAt  sql.NullTime
-	UpdatedAt  sql.NullTime
+	CartID     int32         `json:"cart_id"`
+	CustomerID sql.NullInt32 `json:"customer_id"`
+	CreatedAt  time.Time     `json:"created_at"`
+	UpdatedAt  time.Time     `json:"updated_at"`
 }
 
 type CartItem struct {
-	CartID    sql.NullInt32
-	ProductID sql.NullInt32
-	Quantity  int32
-	CreatedAt sql.NullTime
-	UpdatedAt sql.NullTime
+	CartID    sql.NullInt32 `json:"cart_id"`
+	ProductID sql.NullInt32 `json:"product_id"`
+	Quantity  int32         `json:"quantity"`
+	CreatedAt time.Time     `json:"created_at"`
+	UpdatedAt time.Time     `json:"updated_at"`
 }
 
 type Customer struct {
-	CustomerID  int32
-	FirstName   string
-	LastName    string
-	Email       string
-	BirthDay    time.Time
-	PhoneNumber string
-	Address     string
-	CreatedAt   sql.NullTime
-	UpdatedAt   sql.NullTime
+	CustomerID  int32     `json:"customer_id"`
+	FirstName   string    `json:"first_name"`
+	LastName    string    `json:"last_name"`
+	Email       string    `json:"email"`
+	BirthDay    time.Time `json:"birth_day"`
+	PhoneNumber string    `json:"phone_number"`
+	Address     string    `json:"address"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 type Order struct {
-	OrderID     int32
-	CustomerID  sql.NullInt32
-	OrderStatus OrdersOrderStatus
-	CreatedAt   sql.NullTime
-	UpdatedAt   sql.NullTime
-	OrderTotal  string
+	OrderID     int32             `json:"order_id"`
+	CustomerID  sql.NullInt32     `json:"customer_id"`
+	OrderStatus OrdersOrderStatus `json:"order_status"`
+	CreatedAt   time.Time         `json:"created_at"`
+	UpdatedAt   time.Time         `json:"updated_at"`
+	OrderTotal  string            `json:"order_total"`
 }
 
 type OrderItem struct {
-	OrderID            sql.NullInt32
-	ProductID          sql.NullInt32
-	Quantity           int32
-	ProductPriceAtTime string
-	CreatedAt          sql.NullTime
-	UpdatedAt          sql.NullTime
+	OrderID            sql.NullInt32 `json:"order_id"`
+	ProductID          sql.NullInt32 `json:"product_id"`
+	Quantity           int32         `json:"quantity"`
+	ProductPriceAtTime string        `json:"product_price_at_time"`
+	CreatedAt          time.Time     `json:"created_at"`
+	UpdatedAt          time.Time     `json:"updated_at"`
 }
 
 type Product struct {
-	ProductID          int32
-	Title              string
-	ProductDescription string
-	Category           sql.NullInt32
-	Price              string
-	ImageUrl           string
-	StockQuantity      int32
-	CreatedAt          sql.NullTime
-	UpdatedAt          sql.NullTime
+	ProductID          int32         `json:"product_id"`
+	Title              string        `json:"title"`
+	ProductDescription string        `json:"product_description"`
+	Category           sql.NullInt32 `json:"category"`
+	Price              string        `json:"price"`
+	ImageUrl           string        `json:"image_url"`
+	StockQuantity      int32         `json:"stock_quantity"`
+	CreatedAt          time.Time     `json:"created_at"`
+	UpdatedAt          time.Time     `json:"updated_at"`
 }
 
 type ProductCategory struct {
-	CategoryID          int32
-	CategoryName        string
-	CategoryDescription sql.NullString
-	CreatedAt           sql.NullTime
-	UpdatedAt           sql.NullTime
+	CategoryID          int32          `json:"category_id"`
+	CategoryName        string         `json:"category_name"`
+	CategoryDescription sql.NullString `json:"category_description"`
+	CreatedAt           time.Time      `json:"created_at"`
+	UpdatedAt           time.Time      `json:"updated_at"`
 }
