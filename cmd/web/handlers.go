@@ -1,15 +1,32 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func (app *application) productView(w http.ResponseWriter, r *http.Request) {
-	// product, err := app.queries.GetProduct(r.Context(), id)
-	// if err != nil {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil || id < 1 {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
 
+	product, err := app.queries.GetProduct(r.Context(), int32(id))
+	if err != nil {
+		app.clientError(w, http.StatusNotFound)
+		return
+	}
+
+	// TODO
+	// category, err := app.queries.GetProductCategory(r.Context(), product.Category.Int32)
+	// if err != nil {
 	// }
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(product)
 }
 
 func (app *application) productAdd(w http.ResponseWriter, r *http.Request) {
