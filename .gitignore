@@ -17,6 +17,9 @@
 # Used by Air
 tmp/
 
+# Draw.io backup files for diagrams
+.*drawio.bkp
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
