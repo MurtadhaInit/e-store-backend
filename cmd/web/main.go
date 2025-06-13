@@ -6,10 +6,12 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"time"
 
 	"e-store-backend/internal/repository"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/lmittmann/tint"
 )
 
 type application struct {
@@ -25,9 +27,10 @@ func main() {
 	flag.StringVar(&cfg.addr, "addr", ":4210", "HTTP network address")
 	flag.Parse()
 
-	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		AddSource: true,
-		Level:     slog.LevelDebug,
+	logger := slog.New(tint.NewHandler(os.Stdout, &tint.Options{
+		Level:      slog.LevelDebug,
+		AddSource:  true,
+		TimeFormat: time.Kitchen,
 	}))
 
 	dsn, dsn_set := os.LookupEnv("DSN")
