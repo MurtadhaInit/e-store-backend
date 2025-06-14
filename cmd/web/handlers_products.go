@@ -27,7 +27,11 @@ func (app *application) productView(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(product)
+	err = json.NewEncoder(w).Encode(product)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
 }
 
 func (app *application) productAdd(w http.ResponseWriter, r *http.Request) {
@@ -86,10 +90,24 @@ func (app *application) productDelete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if rows > 0 {
-		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "Successfully removed %d product(s)", int(rows))
 	} else {
 		app.clientError(w, http.StatusBadRequest, "No matching products removed")
+	}
+}
+
+func (app *application) productAll(w http.ResponseWriter, r *http.Request) {
+	products, err := app.queries.GetAllProducts(r.Context())
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(products)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
 	}
 }
 
@@ -108,16 +126,4 @@ func (app *application) productLatest(w http.ResponseWriter, r *http.Request) {
 	// 	j, _ := json.Marshal(product)
 	// 	w.Write(j)
 	// }
-}
-
-func (app *application) productAll(w http.ResponseWriter, r *http.Request) {
-	products, err := app.queries.GetAllProducts(r.Context())
-	if err != nil {
-		app.serverError(w, r, err)
-		return
-	}
-
-	for _, product := range products {
-		fmt.Fprintf(w, "Product: %s\n", product.Title)
-	}
 }
