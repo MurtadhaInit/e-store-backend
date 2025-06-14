@@ -1,6 +1,7 @@
 package main
 
 import (
+	"e-store-backend/internal/repository"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -16,7 +17,7 @@ func (app *application) productView(w http.ResponseWriter, r *http.Request) {
 
 	product, err := app.queries.GetProduct(r.Context(), int32(id))
 	if err != nil {
-		app.clientError(w, http.StatusNotFound)
+		app.clientError(w, http.StatusNotFound, "No matching record found")
 		return
 	}
 
@@ -30,17 +31,39 @@ func (app *application) productView(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) productAdd(w http.ResponseWriter, r *http.Request) {
-	// get the category id from the category name
+	var newProduct repository.AddProductParams
 
-	// result, _ := app.queries.AddProduct(r.Context(), repository.AddProductParams{
-	// 	Title:              "Ginger",
-	// 	ProductDescription: "My amazing ginger product",
-	// 	Category:           sql.NullInt32{Int32: 1, Valid: true},
-	// 	Price:              "33.2",
-	// 	ImageUrl:           "https://yoo.com",
-	// 	StockQuantity:      33,
-	// })
-	// println(result.LastInsertId())
+	err := json.NewDecoder(r.Body).Decode(&newProduct)
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest, "Invalid or missing data")
+		return
+	}
+
+	result, err := app.queries.AddProduct(r.Context(), newProduct)
+	if err != nil {
+		// TODO: add a check for duplicate errors and return a client error with a custom message
+		app.serverError(w, r, err)
+		return
+	}
+
+	insertedID, err := result.LastInsertId()
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	insertedProduct, err := app.queries.GetProduct(r.Context(), int32(insertedID))
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	err = json.NewEncoder(w).Encode(insertedProduct)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
 }
 
 func (app *application) productEdit(w http.ResponseWriter, r *http.Request) {
