@@ -66,14 +66,37 @@ func (app *application) productAdd(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (app *application) productDelete(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil || id < 1 {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	result, err := app.queries.DeleteProduct(r.Context(), int32(id))
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest, "No matching record found")
+		return
+	}
+
+	rows, err := result.RowsAffected()
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	if rows > 0 {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "Successfully removed %d product(s)", int(rows))
+	} else {
+		app.clientError(w, http.StatusBadRequest, "No matching products removed")
+	}
+}
+
 func (app *application) productEdit(w http.ResponseWriter, r *http.Request) {
 	// result, err := app.queries.EditProduct(r.Context(), repository.EditProductParams{
 	// 	ProductID: ,
 	// })
-}
-
-func (app *application) productDelete(w http.ResponseWriter, r *http.Request) {
-	// err := app.queries.DeleteProduct(r.Context(), 2)
 }
 
 func (app *application) productLatest(w http.ResponseWriter, r *http.Request) {
