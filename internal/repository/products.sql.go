@@ -36,14 +36,13 @@ func (q *Queries) AddProduct(ctx context.Context, arg AddProductParams) (sql.Res
 	)
 }
 
-const deleteProduct = `-- name: DeleteProduct :exec
+const deleteProduct = `-- name: DeleteProduct :execresult
 DELETE FROM products
 WHERE product_id = ?
 `
 
-func (q *Queries) DeleteProduct(ctx context.Context, productID int32) error {
-	_, err := q.db.ExecContext(ctx, deleteProduct, productID)
-	return err
+func (q *Queries) DeleteProduct(ctx context.Context, productID int32) (sql.Result, error) {
+	return q.db.ExecContext(ctx, deleteProduct, productID)
 }
 
 const editProduct = `-- name: EditProduct :execresult

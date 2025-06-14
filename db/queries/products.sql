@@ -16,7 +16,7 @@ INSERT INTO products (
     title, product_description, category, price, image_url, stock_quantity
 ) VALUES (?, ?, ?, ?, ?, ?);
 
--- name: DeleteProduct :exec
+-- name: DeleteProduct :execresult
 DELETE FROM products
 WHERE product_id = ?;
 
