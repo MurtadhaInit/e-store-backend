@@ -7,7 +7,23 @@ package repository
 
 import (
 	"context"
+	"database/sql"
 )
+
+const addProductCategory = `-- name: AddProductCategory :execresult
+INSERT INTO product_categories (
+    category_name, category_description
+) VALUES (?, ?)
+`
+
+type AddProductCategoryParams struct {
+	CategoryName        string `json:"category_name"`
+	CategoryDescription string `json:"category_description"`
+}
+
+func (q *Queries) AddProductCategory(ctx context.Context, arg AddProductCategoryParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, addProductCategory, arg.CategoryName, arg.CategoryDescription)
+}
 
 const getProductCategory = `-- name: GetProductCategory :one
 SELECT category_id, category_name, category_description, created_at, updated_at FROM product_categories

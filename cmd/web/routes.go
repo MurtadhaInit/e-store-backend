@@ -13,5 +13,8 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("POST /products/edit/{id}", app.productEdit)
 	mux.HandleFunc("POST /products/add", app.productAdd)
 
+	// Categories routes
+	mux.HandleFunc("POST /categories/add", app.categoryAdd)
+
 	return mux
 }
