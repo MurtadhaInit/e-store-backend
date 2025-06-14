@@ -1,3 +1,5 @@
+-- +goose Up
+-- +goose StatementBegin
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(40) NOT NULL,
@@ -15,8 +17,8 @@ CREATE INDEX idx_customer_email ON customers (email);
 
 CREATE TABLE product_categories (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
-    category_name VARCHAR(50) NOT NULL,
-    category_description TEXT,
+    category_name VARCHAR(50) NOT NULL UNIQUE,
+    category_description TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     ON UPDATE CURRENT_TIMESTAMP
@@ -24,7 +26,7 @@ CREATE TABLE product_categories (
 
 CREATE TABLE products (
     product_id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(100) NOT NULL,
+    title VARCHAR(100) NOT NULL UNIQUE,
     product_description TEXT NOT NULL,
     category INT,
     price DECIMAL(10, 2) NOT NULL,
@@ -100,3 +102,15 @@ CREATE TABLE cart_items (
     FOREIGN KEY (cart_id) REFERENCES carts (cart_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 );
+-- +goose StatementEnd
+
+-- +goose Down
+-- +goose StatementBegin
+DROP TABLE cart_items;
+DROP TABLE carts;
+DROP TABLE order_items;
+DROP TABLE orders;
+DROP TABLE products;
+DROP TABLE product_categories;
+DROP TABLE customers;
+-- +goose StatementEnd

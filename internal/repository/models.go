@@ -114,9 +114,9 @@ type Product struct {
 }
 
 type ProductCategory struct {
-	CategoryID          int32          `json:"category_id"`
-	CategoryName        string         `json:"category_name"`
-	CategoryDescription sql.NullString `json:"category_description"`
-	CreatedAt           time.Time      `json:"created_at"`
-	UpdatedAt           time.Time      `json:"updated_at"`
+	CategoryID          int32     `json:"category_id"`
+	CategoryName        string    `json:"category_name"`
+	CategoryDescription string    `json:"category_description"`
+	CreatedAt           time.Time `json:"created_at"`
+	UpdatedAt           time.Time `json:"updated_at"`
 }
