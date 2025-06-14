@@ -1,0 +1,14 @@
+type: workspace
+model: workspace
+id: wk_op6mW7tbDK
+createdAt: 2025-06-13T12:22:13.803944
+updatedAt: 2025-06-13T12:22:24.843520
+authentication: {}
+authenticationType: null
+description: ''
+headers: []
+name: e-commerce-api
+encryptionKeyChallenge: eUE0azNuQwGuU28yV3w27k+4C7wkefR00gTtJ3SNII6gVW3Cqh/1oOcjw2UnvP6t8mc3pI6WyssIqPVpTIg2mG/tBmhiJp3Igr1TTSpqFRPbSlGRBrMJzi0CTlOpnKonaVk=
+settingValidateCertificates: true
+settingFollowRedirects: true
+settingRequestTimeout: 0

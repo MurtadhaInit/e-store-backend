@@ -1,0 +1,27 @@
+type: http_request
+model: http_request
+id: rq_7SRfzo7Gk7
+createdAt: 2025-06-14T10:04:56.040049
+updatedAt: 2025-06-14T10:08:02.360313
+workspaceId: wk_op6mW7tbDK
+folderId: fl_hWUwXFBdr8
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "category_name": "Coffee",
+      "category_description": "All sorts of roasted specialty coffee"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: 99YQjSUEMn
+method: POST
+name: ''
+sortPriority: -1749817544055.0
+url: http://localhost:4210/categories/add
+urlParameters: []
