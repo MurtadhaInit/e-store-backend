@@ -90,7 +90,10 @@ func (app *application) productDelete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if rows > 0 {
-		fmt.Fprintf(w, "Successfully removed %d product(s)", int(rows))
+		_, err := fmt.Fprintf(w, "Successfully removed %d product(s)", int(rows))
+		if err != nil {
+			app.serverError(w, r, err)
+		}
 	} else {
 		app.clientError(w, http.StatusBadRequest, "No matching products removed")
 	}
@@ -111,19 +114,36 @@ func (app *application) productAll(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (app *application) productLatest(w http.ResponseWriter, r *http.Request) {
+	limitPar := r.URL.Query().Get("limit")
+	var limit int32
+	if limitPar == "" {
+		limit = 10 // default value
+	} else {
+		limitInt, err := strconv.Atoi(limitPar)
+		if err != nil || limitInt < 1 {
+			app.clientError(w, http.StatusBadRequest, "invalid limit provided")
+			return
+		}
+		limit = int32(limitInt)
+	}
+
+	products, err := app.queries.GetLatestProducts(r.Context(), limit)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(products)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+}
+
 func (app *application) productEdit(w http.ResponseWriter, r *http.Request) {
 	// result, err := app.queries.EditProduct(r.Context(), repository.EditProductParams{
 	// 	ProductID: ,
 	// })
-}
-
-func (app *application) productLatest(w http.ResponseWriter, r *http.Request) {
-	// products, err := app.queries.GetLatestProducts(r.Context(), 10)
-	// if err != nil {
-	// 	app.serverError(w, r, err)
-	// }
-	// for _, product := range products {
-	// 	j, _ := json.Marshal(product)
-	// 	w.Write(j)
-	// }
 }
