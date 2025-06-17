@@ -48,23 +48,24 @@ func (q *Queries) DeleteProduct(ctx context.Context, productID int32) (sql.Resul
 const editProduct = `-- name: EditProduct :execresult
 UPDATE products
 SET
-    title = ?,
-    product_description = ?,
-    category = ?,
-    price = ?,
-    image_url = ?,
-    stock_quantity = ?
+    title = COALESCE(?, title),
+    product_description
+    = COALESCE(?, product_description),
+    category = COALESCE(?, category),
+    price = COALESCE(?, price),
+    image_url = COALESCE(?, image_url),
+    stock_quantity = COALESCE(?, stock_quantity)
 WHERE product_id = ?
 `
 
 type EditProductParams struct {
-	Title              string        `json:"title"`
-	ProductDescription string        `json:"product_description"`
-	Category           sql.NullInt32 `json:"category"`
-	Price              string        `json:"price"`
-	ImageUrl           string        `json:"image_url"`
-	StockQuantity      int32         `json:"stock_quantity"`
-	ProductID          int32         `json:"product_id"`
+	Title              sql.NullString `json:"title"`
+	ProductDescription sql.NullString `json:"product_description"`
+	Category           sql.NullInt32  `json:"category"`
+	Price              sql.NullString `json:"price"`
+	ImageUrl           sql.NullString `json:"image_url"`
+	StockQuantity      sql.NullInt32  `json:"stock_quantity"`
+	ProductID          int32          `json:"product_id"`
 }
 
 func (q *Queries) EditProduct(ctx context.Context, arg EditProductParams) (sql.Result, error) {

@@ -10,7 +10,7 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("GET /products/latest", app.productLatest)
 	mux.HandleFunc("GET /products/{id}", app.productView)
 	mux.HandleFunc("DELETE /products/{id}", app.productDelete)
-	mux.HandleFunc("POST /products/edit/{id}", app.productEdit)
+	mux.HandleFunc("PATCH /products/{id}", app.productEdit)
 	mux.HandleFunc("POST /products/add", app.productAdd)
 
 	// Categories routes

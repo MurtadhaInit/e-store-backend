@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"e-store-backend/internal/repository"
 	"encoding/json"
 	"fmt"
@@ -143,7 +144,77 @@ func (app *application) productLatest(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) productEdit(w http.ResponseWriter, r *http.Request) {
-	// result, err := app.queries.EditProduct(r.Context(), repository.EditProductParams{
-	// 	ProductID: ,
-	// })
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil || id < 1 {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	var updateData map[string]interface{}
+	err = json.NewDecoder(r.Body).Decode(&updateData)
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest, "Invalid JSON data")
+		return
+	}
+
+	if len(updateData) == 0 {
+		app.clientError(w, http.StatusBadRequest, "No fields to update")
+		return
+	}
+
+	params := repository.EditProductParams{
+		ProductID: int32(id),
+	}
+
+	if title, ok := updateData["title"].(string); ok {
+		params.Title = sql.NullString{String: title, Valid: true}
+	}
+	if desc, ok := updateData["product_description"].(string); ok {
+		params.ProductDescription = sql.NullString{String: desc, Valid: true}
+	}
+	if price, ok := updateData["price"].(string); ok {
+		params.Price = sql.NullString{String: price, Valid: true}
+	}
+	if imageURL, ok := updateData["image_url"].(string); ok {
+		params.ImageUrl = sql.NullString{String: imageURL, Valid: true}
+	}
+	if category, ok := updateData["category"]; ok {
+		if catFloat, isFloat := category.(float64); isFloat {
+			params.Category = sql.NullInt32{Int32: int32(catFloat), Valid: true}
+		}
+	}
+	if stock, ok := updateData["stock_quantity"]; ok {
+		if stockFloat, isFloat := stock.(float64); isFloat {
+			params.StockQuantity = sql.NullInt32{Int32: int32(stockFloat), Valid: true}
+		}
+	}
+
+	result, err := app.queries.EditProduct(r.Context(), params)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	rows, err := result.RowsAffected()
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	if rows > 0 {
+		updatedProduct, err := app.queries.GetProduct(r.Context(), int32(id))
+		if err != nil {
+			app.serverError(w, r, err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		err = json.NewEncoder(w).Encode(updatedProduct)
+		if err != nil {
+			app.serverError(w, r, err)
+			return
+		}
+	} else {
+		app.clientError(w, http.StatusBadRequest, "No rows were updated")
+	}
 }
