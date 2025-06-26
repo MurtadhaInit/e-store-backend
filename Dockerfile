@@ -11,10 +11,9 @@ FROM base AS build
 COPY . .
 # To produce static binaries
 ENV CGO_ENABLED=0
-# TODO: why can't `go build` recursively search directories for Go files?
-RUN go build -o ./bin ./cmd/**
+RUN go build -o ./bin/ .
 
 FROM scratch AS prod
 WORKDIR /app
 COPY --from=build /app/bin/ ./
-CMD [ "./bin" ]
+CMD [ "./e-store-backend" ]

@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"flag"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -21,10 +22,10 @@ type application struct {
 
 func main() {
 	type config struct {
-		addr string
+		port int
 	}
 	var cfg config
-	flag.StringVar(&cfg.addr, "addr", ":4210", "HTTP network address")
+	flag.IntVar(&cfg.port, "port", 4210, "HTTP network address port")
 	flag.Parse()
 
 	logger := slog.New(tint.NewHandler(os.Stdout, &tint.Options{
@@ -53,8 +54,8 @@ func main() {
 		queries: queries,
 	}
 
-	app.logger.Info("Starting server", slog.String("addr", cfg.addr))
-	err = http.ListenAndServe(cfg.addr, app.routes())
+	app.logger.Info("Starting server", slog.String("addr", fmt.Sprintf(":%d", cfg.port)))
+	err = http.ListenAndServe(fmt.Sprintf(":%d", cfg.port), app.routes())
 	app.logger.Error(err.Error())
 	os.Exit(1)
 }
