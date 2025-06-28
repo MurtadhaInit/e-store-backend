@@ -21,14 +21,7 @@ func main() {
 
 	addr := fmt.Sprintf(":%d", cfg.port)
 
-	dsn, dsn_set := os.LookupEnv("DSN")
-	if !dsn_set || dsn == "" {
-		// fmt.Println("DSN environment variable not set. Could not connect to the database.")
-		// os.Exit(1)
-		panic("DSN environment variable not set. Could not connect to the database.")
-	}
-
-	app, err := app.NewApplication(dsn)
+	app, err := app.NewApplication()
 	if err != nil {
 		panic(err)
 	}
