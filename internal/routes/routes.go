@@ -4,15 +4,18 @@ import (
 	"e-store-backend/internal/app"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 func SetupRoutes(app *app.Application) *chi.Mux {
 	r := chi.NewRouter()
 
+	r.Use(middleware.StripSlashes)
+
 	r.Get("/health", app.HealthCheck)
 
 	// Product routes
-	r.Get("/products/", app.ProductAll)
+	r.Get("/products", app.ProductAll)
 	r.Get("/products/latest", app.ProductLatest)
 	r.Get("/products/{id}", app.ProductView)
 	r.Delete("/products/{id}", app.ProductDelete)
