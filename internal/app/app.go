@@ -2,7 +2,8 @@ package app
 
 import (
 	"database/sql"
-	"e-store-backend/internal/db"
+	"e-store-backend/db/migrations"
+	"e-store-backend/internal/database"
 	"e-store-backend/internal/repository"
 	"fmt"
 	"log/slog"
@@ -27,8 +28,12 @@ func NewApplication() (*Application, error) {
 		TimeFormat: time.Kitchen,
 	}))
 
-	db, err := db.OpenDB()
+	db, err := database.OpenDB()
 	if err != nil {
+		return nil, err
+	}
+
+	if err := database.Migrate(db, migrations.EmbeddedMigrations, "."); err != nil {
 		return nil, err
 	}
 
