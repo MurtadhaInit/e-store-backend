@@ -25,6 +25,39 @@ func (q *Queries) AddProductCategory(ctx context.Context, arg AddProductCategory
 	return q.db.ExecContext(ctx, addProductCategory, arg.CategoryName, arg.CategoryDescription)
 }
 
+const getAllProductCategories = `-- name: GetAllProductCategories :many
+SELECT category_id, category_name, category_description, created_at, updated_at FROM product_categories
+`
+
+func (q *Queries) GetAllProductCategories(ctx context.Context) ([]ProductCategory, error) {
+	rows, err := q.db.QueryContext(ctx, getAllProductCategories)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ProductCategory
+	for rows.Next() {
+		var i ProductCategory
+		if err := rows.Scan(
+			&i.CategoryID,
+			&i.CategoryName,
+			&i.CategoryDescription,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getProductCategory = `-- name: GetProductCategory :one
 SELECT category_id, category_name, category_description, created_at, updated_at FROM product_categories
 WHERE category_id = ?

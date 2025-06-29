@@ -23,6 +23,7 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 	r.Post("/products/add", app.ProductAdd)
 
 	// Categories routes
+	r.Get("/categories", app.CategoryAll)
 	r.Post("/categories/add", app.CategoryAdd)
 
 	return r

@@ -7,3 +7,6 @@ LIMIT 1;
 INSERT INTO product_categories (
     category_name, category_description
 ) VALUES (?, ?);
+
+-- name: GetAllProductCategories :many
+SELECT * FROM product_categories;

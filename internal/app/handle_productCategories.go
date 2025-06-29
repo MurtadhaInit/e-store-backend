@@ -41,3 +41,18 @@ func (app *Application) CategoryAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (app *Application) CategoryAll(w http.ResponseWriter, r *http.Request) {
+	productCategories, err := app.Queries.GetAllProductCategories(r.Context())
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(productCategories)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+}
