@@ -39,6 +39,10 @@ func NewApplication() (*Application, error) {
 
 	queries := repository.New(db)
 
+	if err := database.SeedDatabase(db, queries); err != nil {
+		return nil, err
+	}
+
 	app := &Application{
 		Logger:  logger,
 		DB:      db,

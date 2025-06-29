@@ -50,7 +50,3 @@ func Migrate(db *sql.DB, migrationsFS embed.FS, migrationsDir string) error {
 
 	return nil
 }
-
-// func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
-
-// }
