@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_eTKxWoPEuq
 createdAt: 2025-06-13T12:25:44.057714
-updatedAt: 2025-06-14T10:14:12.787566
+updatedAt: 2025-06-14T15:41:46.034178
 workspaceId: wk_op6mW7tbDK
 folderId: fl_PLg948s55S
 authentication: {}
@@ -28,7 +28,7 @@ headers:
   value: application/json
   id: bQ2zIcuHAd
 method: POST
-name: Add New Product
+name: Add new product
 sortPriority: -1749817544055.0
 url: http://localhost:4210/products/add
 urlParameters: []

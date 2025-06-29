@@ -1,0 +1,26 @@
+type: http_request
+model: http_request
+id: rq_gxTtqizZAK
+createdAt: 2025-06-14T17:45:16.243980
+updatedAt: 2025-06-29T10:04:55.173694
+workspaceId: wk_op6mW7tbDK
+folderId: fl_PLg948s55S
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: View latest products
+sortPriority: -1749817544055.0
+url: http://localhost:4210/products/latest
+urlParameters:
+- enabled: true
+  name: limit
+  value: '2'
+  id: BcTHeQrD4V
+- enabled: true
+  name: ''
+  value: ''
+  id: MgtwNR5FyB

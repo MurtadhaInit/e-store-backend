@@ -1,0 +1,18 @@
+type: http_request
+model: http_request
+id: rq_kWXcq7jbxL
+createdAt: 2025-06-14T15:41:39.966303
+updatedAt: 2025-06-29T10:04:39.695434
+workspaceId: wk_op6mW7tbDK
+folderId: fl_PLg948s55S
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: View product
+sortPriority: -1749817544055.0
+url: http://localhost:4210/products/23
+urlParameters: []
