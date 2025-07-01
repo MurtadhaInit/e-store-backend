@@ -15,16 +15,16 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 	r.Get("/health", app.HealthCheck)
 
 	// Product routes
-	r.Get("/products", app.ProductAll)
-	r.Get("/products/latest", app.ProductLatest)
-	r.Get("/products/{id}", app.ProductView)
-	r.Delete("/products/{id}", app.ProductDelete)
-	r.Patch("/products/{id}", app.ProductEdit)
-	r.Post("/products/add", app.ProductAdd)
+	r.Get("/products", app.Handlers.ProductAll)
+	r.Get("/products/latest", app.Handlers.ProductLatest)
+	r.Get("/products/{id}", app.Handlers.ProductView)
+	r.Delete("/products/{id}", app.Handlers.ProductDelete)
+	r.Patch("/products/{id}", app.Handlers.ProductEdit)
+	r.Post("/products/add", app.Handlers.ProductAdd)
 
 	// Categories routes
-	r.Get("/categories", app.CategoryAll)
-	r.Post("/categories/add", app.CategoryAdd)
+	r.Get("/categories", app.Handlers.CategoryAll)
+	r.Post("/categories/add", app.Handlers.CategoryAdd)
 
 	return r
 }

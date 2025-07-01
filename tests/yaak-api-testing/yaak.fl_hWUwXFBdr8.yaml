@@ -2,7 +2,7 @@ type: folder
 model: folder
 id: fl_hWUwXFBdr8
 createdAt: 2025-06-14T09:31:31.030495
-updatedAt: 2025-06-14T09:31:31.030495
+updatedAt: 2025-07-01T17:20:31.755890
 workspaceId: wk_op6mW7tbDK
 folderId: null
 authentication: {}
@@ -10,4 +10,4 @@ authenticationType: null
 description: ''
 headers: []
 name: Product Categories
-sortPriority: -1749893500000.0
+sortPriority: 1000.0

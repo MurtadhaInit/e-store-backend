@@ -1,0 +1,18 @@
+type: http_request
+model: http_request
+id: rq_QB9X7hx26T
+createdAt: 2025-07-01T17:20:45.444841
+updatedAt: 2025-07-01T17:21:26.413444
+workspaceId: wk_op6mW7tbDK
+folderId: fl_hWUwXFBdr8
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: View all categories
+sortPriority: -0.0001
+url: http://localhost:4210/categories
+urlParameters: []
