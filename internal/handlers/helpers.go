@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"e-store-backend/internal/utils"
 	"net/http"
 	"runtime/debug"
 )
 
+// TODO: write function docs
 func (h *Handlers) serverError(w http.ResponseWriter, r *http.Request, err error) {
 	var (
 		method = r.Method
@@ -13,13 +15,14 @@ func (h *Handlers) serverError(w http.ResponseWriter, r *http.Request, err error
 	)
 
 	h.logger.Error(err.Error(), "method", method, "uri", uri, "track", trace)
-	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+	utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": http.StatusText(http.StatusInternalServerError)})
 }
 
+// TODO: might remove. It can be replaced by just using writeJSON alone.
 func (h *Handlers) clientError(w http.ResponseWriter, status int, message ...string) {
 	msg := http.StatusText(status)
 	if len(message) > 0 && message[0] != "" {
 		msg = message[0]
 	}
-	http.Error(w, msg, status)
+	utils.WriteJSON(w, status, utils.Envelope{"error": msg})
 }
