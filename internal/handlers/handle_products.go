@@ -28,7 +28,7 @@ func (h *Handlers) ProductView(w http.ResponseWriter, r *http.Request) {
 	// if err != nil {
 	// }
 
-	err = utils.WriteJSON(w, http.StatusOK, utils.Envelope{"product": product})
+	err = utils.WriteJSON(w, http.StatusFound, utils.Envelope{"product": product})
 	if err != nil {
 		h.serverError(w, r, err)
 		return
