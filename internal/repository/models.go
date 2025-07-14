@@ -72,15 +72,17 @@ type CartItem struct {
 }
 
 type Customer struct {
-	CustomerID  int32     `json:"customer_id"`
-	FirstName   string    `json:"first_name"`
-	LastName    string    `json:"last_name"`
-	Email       string    `json:"email"`
-	BirthDay    time.Time `json:"birth_day"`
-	PhoneNumber string    `json:"phone_number"`
-	Address     string    `json:"address"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	CustomerID   int32     `json:"customer_id"`
+	Username     string    `json:"username"`
+	PasswordHash []byte    `json:"-"`
+	FirstName    string    `json:"first_name"`
+	LastName     string    `json:"last_name"`
+	Email        string    `json:"email"`
+	BirthDay     string    `json:"birth_day"`
+	PhoneNumber  string    `json:"phone_number"`
+	Address      string    `json:"address"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }
 
 type Order struct {
