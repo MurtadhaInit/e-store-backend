@@ -11,5 +11,11 @@ sql:
         overrides:
           - column: "customers.password_hash"
             go_struct_tag: 'json:"-"'
+          - column: "tokens.token_hash"
+            go_struct_tag: 'json:"-"'
+          - column: "tokens.customer_id"
+            go_struct_tag: 'json:"-"'
+          - column: "tokens.token_scope"
+            go_struct_tag: 'json:"-"'
           - column: "customers.birth_day"
             go_type: "string"

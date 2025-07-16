@@ -37,19 +37,6 @@ func (newCustomer *newCustomer) setPassword() error {
 	return nil
 }
 
-func passwordMatch(clearTextPass string, hash []byte) (bool, error) {
-	if err := bcrypt.CompareHashAndPassword(hash, []byte(clearTextPass)); err != nil {
-		switch {
-		case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
-			return false, nil
-		default:
-			return false, err // internal server error
-		}
-	}
-
-	return true, nil
-}
-
 func (h *Handlers) AddCustomer(w http.ResponseWriter, r *http.Request) {
 	var newCustomer newCustomer
 
@@ -106,26 +93,7 @@ func (h *Handlers) AddCustomer(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *Handlers) GetCustomerByUsername(w http.ResponseWriter, r *http.Request) {
-	username := r.PathValue("username")
-	if username == "" {
-		h.clientError(w, http.StatusBadRequest, "missing or invalid username")
-		return
-	}
-
-	customer, err := h.queries.GetCustomerByUsername(r.Context(), username)
-	if err != nil {
-		h.clientError(w, http.StatusNotFound, "No matching record found")
-		return
-	}
-
-	err = utils.WriteJSON(w, http.StatusFound, utils.Envelope{"customer": customer})
-	if err != nil {
-		h.serverError(w, r, err)
-		return
-	}
-}
-
+// TODO
 func (h *Handlers) UpdateCustomer(w http.ResponseWriter, r *http.Request) {
 
 }

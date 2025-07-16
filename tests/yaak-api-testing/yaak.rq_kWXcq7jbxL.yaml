@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_kWXcq7jbxL
 createdAt: 2025-06-14T15:41:39.966303
-updatedAt: 2025-06-30T15:57:01.120526
+updatedAt: 2025-07-14T16:05:56.291065
 workspaceId: wk_op6mW7tbDK
 folderId: fl_PLg948s55S
 authentication: {}
@@ -14,5 +14,5 @@ headers: []
 method: GET
 name: View product
 sortPriority: -1749817544055.0
-url: http://localhost:4210/products/26
+url: http://localhost:4210/products/1
 urlParameters: []

@@ -122,3 +122,10 @@ type ProductCategory struct {
 	CreatedAt           time.Time `json:"created_at"`
 	UpdatedAt           time.Time `json:"updated_at"`
 }
+
+type Token struct {
+	TokenHash  []byte    `json:"-"`
+	CustomerID int32     `json:"-"`
+	Expiry     time.Time `json:"expiry"`
+	TokenScope string    `json:"-"`
+}

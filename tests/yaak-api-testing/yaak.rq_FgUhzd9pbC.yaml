@@ -1,0 +1,33 @@
+type: http_request
+model: http_request
+id: rq_FgUhzd9pbC
+createdAt: 2025-07-14T14:58:31.643500
+updatedAt: 2025-07-16T07:26:26.190646
+workspaceId: wk_op6mW7tbDK
+folderId: fl_qv3a9ZyKRG
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "username": "murtadha96",
+      "first_name": "Murtadha",
+      "last_name": "Zwain",
+      "email": "murtadha@email.com",
+      "birth_day": "1996-05-18",
+      "phone_number": "00962-00000",
+      "address": "Great Martian Street, Mars",
+      "password": "mygreatpassword"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: 6J3hcIGFiK
+method: POST
+name: Add new customer
+sortPriority: -0.0002
+url: http://localhost:4210/customers
+urlParameters: []

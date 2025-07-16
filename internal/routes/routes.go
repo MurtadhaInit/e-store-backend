@@ -28,7 +28,9 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 
 	// Customers routes
 	r.Post("/customers", app.Handlers.AddCustomer)
-	r.Get("/customers/{username}", app.Handlers.GetCustomerByUsername)
+
+	// Tokens routes
+	r.Post("/tokens/authentication", app.Handlers.CreateToken)
 
 	return r
 }

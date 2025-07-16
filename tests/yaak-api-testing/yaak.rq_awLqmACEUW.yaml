@@ -1,0 +1,27 @@
+type: http_request
+model: http_request
+id: rq_awLqmACEUW
+createdAt: 2025-07-16T07:27:26.693806
+updatedAt: 2025-07-16T07:28:39.906580
+workspaceId: wk_op6mW7tbDK
+folderId: fl_tbCWs7yPpW
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "username": "murtadha96",
+      "password": "mygreatpassword"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: jf8muhhrdf
+method: POST
+name: Add token
+sortPriority: -0.00030000000000000003
+url: http://localhost:4210/tokens/authentication
+urlParameters: []
