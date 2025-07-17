@@ -12,7 +12,7 @@ type Handlers struct {
 	queries *repository.Queries
 }
 
-func NewHandlers(logger *slog.Logger, db *sql.DB, queries *repository.Queries) *Handlers {
+func CreateHandlers(logger *slog.Logger, db *sql.DB, queries *repository.Queries) *Handlers {
 	handlers := &Handlers{
 		logger:  logger,
 		db:      db,

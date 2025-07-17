@@ -2,11 +2,12 @@ type: http_request
 model: http_request
 id: rq_CF8uZLYohv
 createdAt: 2025-06-14T15:04:58.770378
-updatedAt: 2025-06-15T12:19:20.970159
+updatedAt: 2025-07-17T19:40:45.199905
 workspaceId: wk_op6mW7tbDK
 folderId: fl_PLg948s55S
-authentication: {}
-authenticationType: null
+authentication:
+  token: ${[ secure(value=b64'WUVOQ19lVUUwYXpOdVF3R0x6eVFOTjZFS3hKdU1EZisxN2xtZ05TQUxlOTBNUXNOUkdIK29qVE1PSm8vM2sxR2lueFc0Qi85azhEdEdhWWdwMGRZNFF1Nmg2Z0ZOQTYyUHhvczIraVkrS2dTeEQ1ZmUvblNVQXdIM2xjT1F0V2FEVDk0VGRCZGVtQT09') ]}
+authenticationType: bearer
 body: {}
 bodyType: null
 description: ''
@@ -14,5 +15,5 @@ headers: []
 method: DELETE
 name: Delete product
 sortPriority: -1749817544055.0
-url: http://localhost:4210/products/1
+url: http://localhost:4210/products/7
 urlParameters: []

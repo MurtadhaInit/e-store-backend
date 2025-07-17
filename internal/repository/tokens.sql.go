@@ -35,35 +35,3 @@ func (q *Queries) AddToken(ctx context.Context, arg AddTokenParams) (sql.Result,
 		arg.TokenScope,
 	)
 }
-
-const deleteAllTokensForUser = `-- name: DeleteAllTokensForUser :execresult
-DELETE FROM tokens
-WHERE token_scope = ? AND customer_id = ?
-`
-
-type DeleteAllTokensForUserParams struct {
-	TokenScope string `json:"-"`
-	CustomerID int32  `json:"-"`
-}
-
-func (q *Queries) DeleteAllTokensForUser(ctx context.Context, arg DeleteAllTokensForUserParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, deleteAllTokensForUser, arg.TokenScope, arg.CustomerID)
-}
-
-const getToken = `-- name: GetToken :one
-SELECT token_hash, customer_id, expiry, token_scope FROM tokens
-WHERE customer_id = ?
-LIMIT 1
-`
-
-func (q *Queries) GetToken(ctx context.Context, customerID int32) (Token, error) {
-	row := q.db.QueryRowContext(ctx, getToken, customerID)
-	var i Token
-	err := row.Scan(
-		&i.TokenHash,
-		&i.CustomerID,
-		&i.Expiry,
-		&i.TokenScope,
-	)
-	return i, err
-}

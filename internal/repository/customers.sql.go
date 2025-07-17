@@ -8,6 +8,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"time"
 )
 
 const addCustomer = `-- name: AddCustomer :execresult
@@ -50,7 +51,6 @@ func (q *Queries) AddCustomer(ctx context.Context, arg AddCustomerParams) (sql.R
 const getCustomerByID = `-- name: GetCustomerByID :one
 SELECT customer_id, username, password_hash, first_name, last_name, email, birth_day, phone_number, address, created_at, updated_at FROM customers
 WHERE customer_id = ?
-LIMIT 1
 `
 
 func (q *Queries) GetCustomerByID(ctx context.Context, customerID int32) (Customer, error) {
@@ -72,10 +72,42 @@ func (q *Queries) GetCustomerByID(ctx context.Context, customerID int32) (Custom
 	return i, err
 }
 
+const getCustomerByToken = `-- name: GetCustomerByToken :one
+SELECT c.customer_id, c.username, c.password_hash, c.first_name, c.last_name, c.email, c.birth_day, c.phone_number, c.address, c.created_at, c.updated_at
+FROM customers AS c
+INNER JOIN tokens AS t
+    ON c.customer_id = t.customer_id
+WHERE t.token_hash = ? AND t.token_scope = ? AND t.expiry > ?
+`
+
+type GetCustomerByTokenParams struct {
+	TokenHash  []byte    `json:"-"`
+	TokenScope string    `json:"-"`
+	Date       time.Time `json:"date"`
+}
+
+func (q *Queries) GetCustomerByToken(ctx context.Context, arg GetCustomerByTokenParams) (Customer, error) {
+	row := q.db.QueryRowContext(ctx, getCustomerByToken, arg.TokenHash, arg.TokenScope, arg.Date)
+	var i Customer
+	err := row.Scan(
+		&i.CustomerID,
+		&i.Username,
+		&i.PasswordHash,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.BirthDay,
+		&i.PhoneNumber,
+		&i.Address,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const getCustomerByUsername = `-- name: GetCustomerByUsername :one
 SELECT customer_id, username, password_hash, first_name, last_name, email, birth_day, phone_number, address, created_at, updated_at FROM customers
 WHERE username = ?
-LIMIT 1
 `
 
 func (q *Queries) GetCustomerByUsername(ctx context.Context, username string) (Customer, error) {

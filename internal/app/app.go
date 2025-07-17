@@ -5,6 +5,7 @@ import (
 	"e-store-backend/db/migrations"
 	"e-store-backend/internal/database"
 	"e-store-backend/internal/handlers"
+	"e-store-backend/internal/middleware"
 	"e-store-backend/internal/repository"
 	"fmt"
 	"log/slog"
@@ -17,9 +18,10 @@ import (
 )
 
 type Application struct {
-	Logger   *slog.Logger
-	DB       *sql.DB
-	Handlers *handlers.Handlers
+	Logger     *slog.Logger
+	DB         *sql.DB
+	Handlers   *handlers.Handlers
+	Middleware *middleware.Middleware
 }
 
 func NewApplication() (*Application, error) {
@@ -44,12 +46,14 @@ func NewApplication() (*Application, error) {
 		return nil, err
 	}
 
-	handlers := handlers.NewHandlers(logger, db, queries)
+	handlers := handlers.CreateHandlers(logger, db, queries)
+	middleware := middleware.CreateMiddleware(queries)
 
 	app := &Application{
-		Logger:   logger,
-		DB:       db,
-		Handlers: handlers,
+		Logger:     logger,
+		DB:         db,
+		Handlers:   handlers,
+		Middleware: middleware,
 	}
 
 	return app, nil

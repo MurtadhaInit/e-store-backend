@@ -19,10 +19,6 @@ type token struct {
 	TokenPlaintext string `json:"token"`
 }
 
-const (
-	ScopeAuth = "authentication"
-)
-
 func generateToken(customerID int32, ttl time.Duration, scope string) (*token, error) {
 	emptyBytes := make([]byte, 32)
 	_, err := rand.Read(emptyBytes)
@@ -87,7 +83,7 @@ func (h *Handlers) CreateToken(w http.ResponseWriter, r *http.Request) {
 		h.clientError(w, http.StatusUnauthorized, "invalid credentials")
 	}
 
-	token, err := generateToken(customer.CustomerID, 24*time.Hour, ScopeAuth)
+	token, err := generateToken(customer.CustomerID, 24*time.Hour, utils.Scopes.ScopeAuth)
 	if err != nil {
 		h.serverError(w, r, err)
 		return
