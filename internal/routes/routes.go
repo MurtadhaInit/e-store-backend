@@ -5,12 +5,18 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 )
 
 func SetupRoutes(app *app.Application) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.StripSlashes)
+	// TODO: configure properly for production
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"http://localhost:5173"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+	}))
 
 	r.Group(func(r chi.Router) {
 		r.Use(app.Middleware.Authenticate)

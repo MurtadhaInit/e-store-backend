@@ -4,6 +4,7 @@ go 1.24
 
 require (
 	github.com/go-chi/chi/v5 v5.2.2
+	github.com/go-chi/cors v1.2.2
 	github.com/go-sql-driver/mysql v1.9.2
 	github.com/lmittmann/tint v1.1.2
 	github.com/pressly/goose/v3 v3.24.3
