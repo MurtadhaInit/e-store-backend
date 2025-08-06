@@ -9,12 +9,7 @@ services:
     # In production, we don't need to mount the host project directory for hot reloading
     volumes: !reset []
     restart: unless-stopped
-    # healthcheck:
-    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4210/health"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 40s
+    healthcheck: !reset {}
     # TODO: add scaling directives
   # load-balancer:
   #   image: traefik
