@@ -13,7 +13,7 @@ CREATE TABLE products (
     product_id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL UNIQUE,
     product_description TEXT NOT NULL,
-    category INT,
+    category INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     image_url VARCHAR(255) NOT NULL,
     stock_quantity INT NOT NULL CHECK (stock_quantity >= 0),

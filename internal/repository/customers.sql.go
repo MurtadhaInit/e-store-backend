@@ -77,6 +77,7 @@ SELECT c.customer_id, c.username, c.password_hash, c.first_name, c.last_name, c.
 FROM customers AS c
 INNER JOIN tokens AS t
     ON c.customer_id = t.customer_id
+    -- TODO: might replace the expiry comparison with the internal ` + "`" + `> NOW()` + "`" + `
 WHERE t.token_hash = ? AND t.token_scope = ? AND t.expiry > ?
 `
 

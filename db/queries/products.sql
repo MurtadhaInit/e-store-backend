@@ -2,9 +2,19 @@
 SELECT * FROM products;
 
 -- name: GetLatestProducts :many
-SELECT * FROM products
-ORDER BY created_at DESC
-LIMIT ?;
+SELECT p.*
+FROM products AS p
+WHERE (
+    SELECT COUNT(*)
+    FROM products AS p2
+    WHERE
+        p2.category = p.category
+        AND (
+            p2.created_at > p.created_at
+            OR (p2.created_at = p.created_at AND p2.product_id > p.product_id)
+        )
+) < sqlc.arg('category_limit')
+ORDER BY p.category ASC, p.created_at DESC, p.product_id DESC;
 
 -- name: GetProduct :one
 SELECT * FROM products

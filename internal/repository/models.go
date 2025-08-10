@@ -104,15 +104,15 @@ type OrderItem struct {
 }
 
 type Product struct {
-	ProductID          int32         `json:"product_id"`
-	Title              string        `json:"title"`
-	ProductDescription string        `json:"product_description"`
-	Category           sql.NullInt32 `json:"category"`
-	Price              string        `json:"price"`
-	ImageUrl           string        `json:"image_url"`
-	StockQuantity      int32         `json:"stock_quantity"`
-	CreatedAt          time.Time     `json:"created_at"`
-	UpdatedAt          time.Time     `json:"updated_at"`
+	ProductID          int32     `json:"product_id"`
+	Title              string    `json:"title"`
+	ProductDescription string    `json:"product_description"`
+	Category           int32     `json:"category"`
+	Price              string    `json:"price"`
+	ImageUrl           string    `json:"image_url"`
+	StockQuantity      int32     `json:"stock_quantity"`
+	CreatedAt          time.Time `json:"created_at"`
+	UpdatedAt          time.Time `json:"updated_at"`
 }
 
 type ProductCategory struct {

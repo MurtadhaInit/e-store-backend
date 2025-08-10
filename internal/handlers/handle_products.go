@@ -118,7 +118,7 @@ func (h *Handlers) ProductLatest(w http.ResponseWriter, r *http.Request) {
 	limitPar := r.URL.Query().Get("limit")
 	var limit int32
 	if limitPar == "" {
-		limit = 10 // default value
+		limit = 3 // default value
 	} else {
 		limitInt, err := strconv.Atoi(limitPar)
 		if err != nil || limitInt < 1 {

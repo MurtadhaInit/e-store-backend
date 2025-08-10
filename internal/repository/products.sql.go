@@ -17,12 +17,12 @@ INSERT INTO products (
 `
 
 type AddProductParams struct {
-	Title              string        `json:"title"`
-	ProductDescription string        `json:"product_description"`
-	Category           sql.NullInt32 `json:"category"`
-	Price              string        `json:"price"`
-	ImageUrl           string        `json:"image_url"`
-	StockQuantity      int32         `json:"stock_quantity"`
+	Title              string `json:"title"`
+	ProductDescription string `json:"product_description"`
+	Category           int32  `json:"category"`
+	Price              string `json:"price"`
+	ImageUrl           string `json:"image_url"`
+	StockQuantity      int32  `json:"stock_quantity"`
 }
 
 func (q *Queries) AddProduct(ctx context.Context, arg AddProductParams) (sql.Result, error) {
@@ -118,13 +118,23 @@ func (q *Queries) GetAllProducts(ctx context.Context) ([]Product, error) {
 }
 
 const getLatestProducts = `-- name: GetLatestProducts :many
-SELECT product_id, title, product_description, category, price, image_url, stock_quantity, created_at, updated_at FROM products
-ORDER BY created_at DESC
-LIMIT ?
+SELECT p.product_id, p.title, p.product_description, p.category, p.price, p.image_url, p.stock_quantity, p.created_at, p.updated_at
+FROM products AS p
+WHERE (
+    SELECT COUNT(*)
+    FROM products AS p2
+    WHERE
+        p2.category = p.category
+        AND (
+            p2.created_at > p.created_at
+            OR (p2.created_at = p.created_at AND p2.product_id > p.product_id)
+        )
+) < ?
+ORDER BY p.category ASC, p.created_at DESC, p.product_id DESC
 `
 
-func (q *Queries) GetLatestProducts(ctx context.Context, limit int32) ([]Product, error) {
-	rows, err := q.db.QueryContext(ctx, getLatestProducts, limit)
+func (q *Queries) GetLatestProducts(ctx context.Context, categoryLimit int32) ([]Product, error) {
+	rows, err := q.db.QueryContext(ctx, getLatestProducts, categoryLimit)
 	if err != nil {
 		return nil, err
 	}
