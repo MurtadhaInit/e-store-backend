@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_gxTtqizZAK
 createdAt: 2025-06-14T17:45:16.243980
-updatedAt: 2025-08-10T08:49:47.854624
+updatedAt: 2025-08-11T15:15:53.859439
 workspaceId: wk_op6mW7tbDK
 folderId: fl_PLg948s55S
 authentication: {}
@@ -16,7 +16,7 @@ name: View latest products
 sortPriority: -1749817544055.0
 url: http://localhost:4210/products/latest
 urlParameters:
-- enabled: false
+- enabled: true
   name: limit
   value: '2'
   id: BcTHeQrD4V

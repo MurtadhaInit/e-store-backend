@@ -9,7 +9,6 @@ services:
     # In production, we don't need to mount the host project directory for hot reloading
     volumes: !reset []
     restart: unless-stopped
-    healthcheck: !reset {}
     # TODO: add scaling directives
   # load-balancer:
   #   image: traefik

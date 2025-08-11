@@ -34,12 +34,6 @@ services:
       - ecomm-net
     volumes:
       - ./:/app:rw
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4210/health"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 30s
 
 networks:
   ecomm-net:
