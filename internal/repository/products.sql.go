@@ -81,18 +81,18 @@ func (q *Queries) EditProduct(ctx context.Context, arg EditProductParams) (sql.R
 }
 
 const getAllProducts = `-- name: GetAllProducts :many
-SELECT product_id, title, product_description, category, price, image_url, stock_quantity, created_at, updated_at FROM products
+SELECT product_id, title, product_description, category, price, image_url, stock_quantity, created_at, updated_at FROM products_with_category
 `
 
-func (q *Queries) GetAllProducts(ctx context.Context) ([]Product, error) {
+func (q *Queries) GetAllProducts(ctx context.Context) ([]ProductsWithCategory, error) {
 	rows, err := q.db.QueryContext(ctx, getAllProducts)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Product
+	var items []ProductsWithCategory
 	for rows.Next() {
-		var i Product
+		var i ProductsWithCategory
 		if err := rows.Scan(
 			&i.ProductID,
 			&i.Title,
@@ -119,29 +119,29 @@ func (q *Queries) GetAllProducts(ctx context.Context) ([]Product, error) {
 
 const getLatestProducts = `-- name: GetLatestProducts :many
 SELECT p.product_id, p.title, p.product_description, p.category, p.price, p.image_url, p.stock_quantity, p.created_at, p.updated_at
-FROM products AS p
+FROM products_with_category AS p
 WHERE (
     SELECT COUNT(*)
-    FROM products AS p2
+    FROM products_with_category AS p2
     WHERE
         p2.category = p.category
         AND (
             p2.created_at > p.created_at
             OR (p2.created_at = p.created_at AND p2.product_id > p.product_id)
         )
-) < ?
+) < CAST(? AS SIGNED)
 ORDER BY p.category ASC, p.created_at DESC, p.product_id DESC
 `
 
-func (q *Queries) GetLatestProducts(ctx context.Context, categoryLimit int32) ([]Product, error) {
+func (q *Queries) GetLatestProducts(ctx context.Context, categoryLimit int64) ([]ProductsWithCategory, error) {
 	rows, err := q.db.QueryContext(ctx, getLatestProducts, categoryLimit)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Product
+	var items []ProductsWithCategory
 	for rows.Next() {
-		var i Product
+		var i ProductsWithCategory
 		if err := rows.Scan(
 			&i.ProductID,
 			&i.Title,
@@ -167,14 +167,14 @@ func (q *Queries) GetLatestProducts(ctx context.Context, categoryLimit int32) ([
 }
 
 const getProduct = `-- name: GetProduct :one
-SELECT product_id, title, product_description, category, price, image_url, stock_quantity, created_at, updated_at FROM products
+SELECT product_id, title, product_description, category, price, image_url, stock_quantity, created_at, updated_at FROM products_with_category
 WHERE product_id = ?
 LIMIT 1
 `
 
-func (q *Queries) GetProduct(ctx context.Context, productID int32) (Product, error) {
+func (q *Queries) GetProduct(ctx context.Context, productID int32) (ProductsWithCategory, error) {
 	row := q.db.QueryRowContext(ctx, getProduct, productID)
-	var i Product
+	var i ProductsWithCategory
 	err := row.Scan(
 		&i.ProductID,
 		&i.Title,

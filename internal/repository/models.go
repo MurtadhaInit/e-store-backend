@@ -123,6 +123,18 @@ type ProductCategory struct {
 	UpdatedAt           time.Time `json:"updated_at"`
 }
 
+type ProductsWithCategory struct {
+	ProductID          int32     `json:"product_id"`
+	Title              string    `json:"title"`
+	ProductDescription string    `json:"product_description"`
+	Category           string    `json:"category"`
+	Price              string    `json:"price"`
+	ImageUrl           string    `json:"image_url"`
+	StockQuantity      int32     `json:"stock_quantity"`
+	CreatedAt          time.Time `json:"created_at"`
+	UpdatedAt          time.Time `json:"updated_at"`
+}
+
 type Token struct {
 	TokenHash  []byte    `json:"-"`
 	CustomerID int32     `json:"-"`

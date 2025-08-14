@@ -15,7 +15,10 @@ func (h *Handlers) serverError(w http.ResponseWriter, r *http.Request, err error
 	)
 
 	h.logger.Error(err.Error(), "method", method, "uri", uri, "track", trace)
-	utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": http.StatusText(http.StatusInternalServerError)})
+	err = utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": http.StatusText(http.StatusInternalServerError)})
+	if err != nil {
+		h.logger.Error(err.Error())
+	}
 }
 
 // TODO: might remove. It can be replaced by just using writeJSON alone.
@@ -24,5 +27,8 @@ func (h *Handlers) clientError(w http.ResponseWriter, status int, message ...str
 	if len(message) > 0 && message[0] != "" {
 		msg = message[0]
 	}
-	utils.WriteJSON(w, status, utils.Envelope{"error": msg})
+	err := utils.WriteJSON(w, status, utils.Envelope{"error": msg})
+	if err != nil {
+		h.logger.Error(err.Error())
+	}
 }

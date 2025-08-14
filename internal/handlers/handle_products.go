@@ -23,11 +23,6 @@ func (h *Handlers) ProductView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO
-	// category, err := h.queries.GetProductCategory(r.Context(), product.Category.Int32)
-	// if err != nil {
-	// }
-
 	err = utils.WriteJSON(w, http.StatusFound, utils.Envelope{"product": product})
 	if err != nil {
 		h.serverError(w, r, err)
@@ -116,7 +111,7 @@ func (h *Handlers) ProductAll(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handlers) ProductLatest(w http.ResponseWriter, r *http.Request) {
 	limitPar := r.URL.Query().Get("limit")
-	var limit int32
+	var limit int64
 	if limitPar == "" {
 		limit = 3 // default value
 	} else {
@@ -125,7 +120,7 @@ func (h *Handlers) ProductLatest(w http.ResponseWriter, r *http.Request) {
 			h.clientError(w, http.StatusBadRequest, "invalid limit provided")
 			return
 		}
-		limit = int32(limitInt)
+		limit = int64(limitInt)
 	}
 
 	products, err := h.queries.GetLatestProducts(r.Context(), limit)

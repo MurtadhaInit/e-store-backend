@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_gxTtqizZAK
 createdAt: 2025-06-14T17:45:16.243980
-updatedAt: 2025-08-11T15:15:53.859439
+updatedAt: 2025-08-14T10:53:30.769854
 workspaceId: wk_op6mW7tbDK
 folderId: fl_PLg948s55S
 authentication: {}

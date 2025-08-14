@@ -15,6 +15,9 @@ CREATE TABLE customers (
     ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- TODO: create a view for filtering out sensitive data when returning users
+-- instead of relying on sqlc config to exclude those fields from JSON tags
+
 CREATE INDEX idx_customer_email ON customers (email);
 
 CREATE TABLE tokens (

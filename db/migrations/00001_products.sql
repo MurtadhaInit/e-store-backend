@@ -22,14 +22,29 @@ CREATE TABLE products (
     ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (category) REFERENCES product_categories (
         category_id
-    ) ON DELETE SET NULL
+    ) ON DELETE RESTRICT
 );
 
 CREATE INDEX idx_product_title ON products (title);
+
+CREATE VIEW products_with_category AS
+SELECT
+    p.product_id,
+    p.title,
+    p.product_description,
+    pc.category_name AS category,
+    p.price,
+    p.image_url,
+    p.stock_quantity,
+    p.created_at,
+    p.updated_at
+FROM products AS p
+INNER JOIN product_categories AS pc ON p.category = pc.category_id;
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
+DROP VIEW products_with_category;
 DROP TABLE products;
 DROP TABLE product_categories;
 -- +goose StatementEnd
