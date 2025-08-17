@@ -55,7 +55,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Single-origin coffee with bright, floral notes and citrus undertones",
 				Category:           categoryIDs["Coffee Beans"],
 				Price:              "24.99",
-				ImageUrl:           "https://example.com/ethiopian-beans.jpg",
+				ImageUrl:           "https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg",
 				StockQuantity:      150,
 			},
 			{
@@ -63,7 +63,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Smooth and sweet, medium roast with notes of nut, milk chocolate, and sweet vanilla",
 				Category:           categoryIDs["Coffee Beans"],
 				Price:              "21.99",
-				ImageUrl:           "https://example.com/three-pillars.jpg",
+				ImageUrl:           "https://images.pexels.com/photos/13737042/pexels-photo-13737042.jpeg",
 				StockQuantity:      13,
 			},
 			{
@@ -71,7 +71,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Gorgeous coffee, impressively sturdy, and stays sweet and full with or without milk",
 				Category:           categoryIDs["Coffee Beans"],
 				Price:              "22.99",
-				ImageUrl:           "https://example.com/blue-bird-orchid.jpg",
+				ImageUrl:           "https://images.pexels.com/photos/20708708/pexels-photo-20708708.jpeg",
 				StockQuantity:      15,
 			},
 			{
@@ -79,7 +79,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Quality Italian espresso machine",
 				Category:           categoryIDs["Coffee Appliances"],
 				Price:              "799.99",
-				ImageUrl:           "https://example.com/lelit-victoria.jpg",
+				ImageUrl:           "https://assets.breville.com/cdn-cgi/image/format=auto/Lelit/PESVI01/PESVI01_Carousel1.png",
 				StockQuantity:      25,
 			},
 			{
@@ -87,7 +87,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Entry-level burr grinder perfect for home brewing",
 				Category:           categoryIDs["Coffee Appliances"],
 				Price:              "169.99",
-				ImageUrl:           "https://example.com/baratza-encore.jpg",
+				ImageUrl:           "https://assets.breville.com/cdn-cgi/image/format=auto/ZCG485/ZCG485_Carousel3.png",
 				StockQuantity:      50,
 			},
 			{
@@ -95,7 +95,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Single boiler espresso machine with ring brew group",
 				Category:           categoryIDs["Coffee Appliances"],
 				Price:              "1000",
-				ImageUrl:           "https://example.com/profitec-go.jpg",
+				ImageUrl:           "https://www.wholelattelove.com/cdn/shop/products/ProfitecGO_rot_schrag.jpg",
 				StockQuantity:      3,
 			},
 			{
@@ -103,7 +103,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Complete pour-over brewing set with dripper, filters, and server",
 				Category:           categoryIDs["Coffee Equipment"],
 				Price:              "39.99",
-				ImageUrl:           "https://example.com/hario-v60.jpg",
+				ImageUrl:           "https://www.hario-usa.com/cdn/shop/products/VD-02R.jpg",
 				StockQuantity:      75,
 			},
 			{
@@ -111,7 +111,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Eco-friendly reusable coffee cup with silicone band",
 				Category:           categoryIDs["Coffee Equipment"],
 				Price:              "19.99",
-				ImageUrl:           "https://example.com/keepcup.jpg",
+				ImageUrl:           "https://myer-media.com.au/wcsstore/MyerCatalogAssetStore/images/50/514/4231/500/9/918998740/918998740_1_720x928.webp",
 				StockQuantity:      200,
 			},
 			{
@@ -119,7 +119,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "An iconic manual espresso machine with factory-fitted pressure gauge",
 				Category:           categoryIDs["Coffee Equipment"],
 				Price:              "279",
-				ImageUrl:           "https://example.com/rok-espressogc-ce.jpg",
+				ImageUrl:           "https://rok.coffee/cdn/shop/files/Espresso_CommercialEd_SS_2000x2000_b81caf0e-7d7e-4aea-8a2b-2746724220a0.jpg",
 				StockQuantity:      10,
 			},
 		}
