@@ -95,7 +95,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Single boiler espresso machine with ring brew group",
 				Category:           categoryIDs["Coffee Appliances"],
 				Price:              "1000",
-				ImageUrl:           "https://www.wholelattelove.com/cdn/shop/products/ProfitecGO_rot_schrag.jpg",
+				ImageUrl:           "https://www.thebrewratio.com/wp-content/uploads/2024/08/Go_02.webp",
 				StockQuantity:      3,
 			},
 			{
@@ -103,7 +103,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Complete pour-over brewing set with dripper, filters, and server",
 				Category:           categoryIDs["Coffee Equipment"],
 				Price:              "39.99",
-				ImageUrl:           "https://www.hario-usa.com/cdn/shop/products/VD-02R.jpg",
+				ImageUrl:           "https://ozocoffee.com/cdn/shop/files/57bcf5fe-hario-oilgreen.png",
 				StockQuantity:      75,
 			},
 			{
@@ -111,7 +111,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "Eco-friendly reusable coffee cup with silicone band",
 				Category:           categoryIDs["Coffee Equipment"],
 				Price:              "19.99",
-				ImageUrl:           "https://myer-media.com.au/wcsstore/MyerCatalogAssetStore/images/50/514/4231/500/9/918998740/918998740_1_720x928.webp",
+				ImageUrl:           "https://uk.keepcup.com/media/catalog/product/image/708248ef/brew-cork-m-12oz-nutmeg.webp?quality=80&fit=bounds&height=&width=",
 				StockQuantity:      200,
 			},
 			{
@@ -119,7 +119,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 				ProductDescription: "An iconic manual espresso machine with factory-fitted pressure gauge",
 				Category:           categoryIDs["Coffee Equipment"],
 				Price:              "279",
-				ImageUrl:           "https://rok.coffee/cdn/shop/files/Espresso_CommercialEd_SS_2000x2000_b81caf0e-7d7e-4aea-8a2b-2746724220a0.jpg",
+				ImageUrl:           "https://brewout.de/cdn/shop/files/ROK-Espresso-GC-Classic-1.png",
 				StockQuantity:      10,
 			},
 		}
