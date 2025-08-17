@@ -60,7 +60,7 @@ func SeedDatabase(db *sql.DB, queries *repository.Queries) error {
 			},
 			{
 				Title:              "Three Pillars",
-				ProductDescription: "Smooth and sweet, medium roast with notes of nut, milk chocolate, and sweet vanilla",
+				ProductDescription: "Smooth and sweet, dark roast with notes of nut, milk chocolate, and sweet vanilla",
 				Category:           categoryIDs["Coffee Beans"],
 				Price:              "21.99",
 				ImageUrl:           "https://images.pexels.com/photos/13737042/pexels-photo-13737042.jpeg",
