@@ -1,0 +1,5 @@
+[tools]
+air = "latest"
+golangci-lint = "2.12.2"
+sqlc = "latest"
+"aqua:pressly/goose" = "latest"
