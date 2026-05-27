@@ -1,0 +1,48 @@
+# Everything not needed inside the build context.
+# Keep this in sync with .gitignore where it makes sense.
+
+# VCS and editor metadata
+.git
+.gitignore
+.github
+.vscode
+.idea
+.claude
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Build outputs and Air's hot-reload scratch dir
+bin/
+tmp/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Docs and design assets (not needed at runtime)
+docs/
+*.md
+!README.md
+
+# Dev-only tooling configs
+.air.toml
+mise.toml
+.sqlfluff
+sqlc.yml
+compose.yml
+compose.*.yml
+Dockerfile
+.dockerignore
+
+# Tests are run in CI from the source tree, not from inside the image
+tests/

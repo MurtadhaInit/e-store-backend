@@ -18,8 +18,7 @@ ORDER BY p.category ASC, p.created_at DESC, p.product_id DESC;
 
 -- name: GetProduct :one
 SELECT * FROM products_with_category
-WHERE product_id = ?
-LIMIT 1;
+WHERE product_id = ?;
 
 -- name: AddProduct :execresult
 INSERT INTO products (
