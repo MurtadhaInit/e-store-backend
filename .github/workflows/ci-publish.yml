@@ -1,4 +1,4 @@
-name: quality-checks
+name: CI and publish
 on:
   push:
     branches:
@@ -133,6 +133,9 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha,format=short,prefix=sha-
+            # Sortable immutable tag for Flux ImagePolicy (continuous deploy from main).
+            # Timestamp-first so it orders correctly both numerically and alphabetically.
+            type=raw,value={{date 'YYYYMMDDHHmmss'}}-{{sha}},enable={{is_default_branch}}
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push
