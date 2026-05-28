@@ -14,7 +14,7 @@ import (
 func OpenDB() (*sql.DB, error) {
 	dsn, dsn_set := os.LookupEnv("DSN")
 	if !dsn_set || dsn == "" {
-		return nil, errors.New("DSN environment variable not set. Could not connect to the database.")
+		return nil, errors.New("DSN environment variable not set. Could not connect to the database")
 	}
 
 	db, err := sql.Open("mysql", dsn)
@@ -24,7 +24,7 @@ func OpenDB() (*sql.DB, error) {
 
 	err = db.Ping()
 	if err != nil {
-		db.Close()
+		_ = db.Close() // best-effort cleanup; the ping error is what we report
 		return nil, err
 	}
 

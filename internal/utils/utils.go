@@ -29,16 +29,16 @@ func WriteJSON(w http.ResponseWriter, status int, data Envelope) error {
 func ReadIDParam(r *http.Request) (int32, error) {
 	idParam := r.PathValue("id")
 	if idParam == "" {
-		return 0, errors.New("Invalid id parameter")
+		return 0, errors.New("missing id parameter")
 	}
 
 	id, err := strconv.ParseInt(idParam, 10, 32)
 	if err != nil {
-		return 0, errors.New("Invalid id parameter type")
+		return 0, errors.New("invalid id parameter")
 	}
 
 	if id < 1 {
-		return 0, errors.New("Invalid id parameter")
+		return 0, errors.New("id parameter must be a positive integer")
 	}
 
 	return int32(id), nil

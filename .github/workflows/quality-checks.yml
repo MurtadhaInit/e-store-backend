@@ -28,7 +28,7 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
-          version: v2.12
+          version: v2.12.2 # match the version in mise.toml (local runs)
 
   sqlc-diff:
     # in case anyone has forgotten to `sqlc generate` after a SQL schema or query change

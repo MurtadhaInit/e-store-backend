@@ -39,6 +39,8 @@ docs/
 mise.toml
 .sqlfluff
 sqlc.yml
+.golangci.yml
+trivy.yaml
 compose.yml
 compose.*.yml
 Dockerfile

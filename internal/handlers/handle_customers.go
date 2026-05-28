@@ -42,12 +42,12 @@ func (h *Handlers) AddCustomer(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&newCustomer)
 	if err != nil {
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "invalid or missing data"})
+		h.clientError(w, http.StatusBadRequest, "invalid or missing data")
 		return
 	}
 
 	if err := newCustomer.validate(); err != nil {
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": err.Error()})
+		h.clientError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 

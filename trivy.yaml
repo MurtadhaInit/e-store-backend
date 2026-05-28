@@ -1,0 +1,23 @@
+# Trivy configuration for filesystem scans (trivy-fs job).
+# Reference: https://trivy.dev/latest/docs/references/configuration/config-file/
+
+scan:
+  scanners:
+    - vuln # known CVEs in Go modules (incl. transitive)
+    - misconfig # Dockerfile lint, k8s/Helm/Terraform misconfigs
+    - secret # hardcoded credentials, API keys, tokens
+  skip-dirs:
+    - tmp # Air's hot-reload scratch dir
+    - .claude # local IDE/agent state
+    - docs # design assets, screenshots
+    - tests # excluded from the image anyway
+
+vulnerability:
+  ignore-unfixed: true # nothing actionable until a fix exists upstream
+  type:
+    - os
+    - library
+
+severity:
+  - CRITICAL
+  - HIGH

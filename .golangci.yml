@@ -1,0 +1,6 @@
+version: "2"
+
+# Surface every finding, not a capped sample (default is 3 and 50, 0 = unlimited)
+issues:
+  max-same-issues: 0
+  max-issues-per-linter: 0

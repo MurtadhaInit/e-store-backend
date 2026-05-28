@@ -47,7 +47,7 @@ func NewApplication() (*Application, error) {
 	}
 
 	handlers := handlers.CreateHandlers(logger, db, queries)
-	middleware := middleware.CreateMiddleware(queries)
+	middleware := middleware.CreateMiddleware(logger, queries)
 
 	app := &Application{
 		Logger:     logger,
@@ -59,6 +59,8 @@ func NewApplication() (*Application, error) {
 	return app, nil
 }
 
-func (app *Application) HealthCheck(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Service is healthy")
+func (app *Application) HealthCheck(w http.ResponseWriter, _ *http.Request) {
+	// Health probes only read the status code; if the body write fails the
+	// client has already disconnected, so there is nothing useful to recover.
+	_, _ = fmt.Fprintln(w, "Service is healthy")
 }

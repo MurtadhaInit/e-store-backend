@@ -63,7 +63,7 @@ func (h *Handlers) CreateToken(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&newTokenReq)
 	if err != nil {
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "invalid or missing data"})
+		h.clientError(w, http.StatusBadRequest, "invalid or missing data")
 		return
 	}
 

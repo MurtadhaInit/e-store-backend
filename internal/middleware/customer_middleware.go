@@ -23,6 +23,14 @@ func setCustomer(r *http.Request, customer *repository.Customer) *http.Request {
 	return r.WithContext(ctx)
 }
 
+// unauthorized writes a 401 JSON response, logging if the write itself fails
+// (at that point the client is gone, so there is nothing else to do).
+func (m *Middleware) unauthorized(w http.ResponseWriter, message string) {
+	if err := utils.WriteJSON(w, http.StatusUnauthorized, utils.Envelope{"error": message}); err != nil {
+		m.logger.Error("writing unauthorized response", "error", err)
+	}
+}
+
 func GetCustomer(r *http.Request) *repository.Customer {
 	customer, ok := r.Context().Value(customerContextKey).(*repository.Customer)
 	if !ok {
@@ -44,7 +52,7 @@ func (m *Middleware) Authenticate(next http.Handler) http.Handler {
 
 		headerParts := strings.Split(authHeader, " ")
 		if len(headerParts) != 2 || headerParts[0] != "Bearer" {
-			utils.WriteJSON(w, http.StatusUnauthorized, utils.Envelope{"error": "invalid authorization header"})
+			m.unauthorized(w, "invalid authorization header")
 			return
 		}
 
@@ -58,10 +66,10 @@ func (m *Middleware) Authenticate(next http.Handler) http.Handler {
 		})
 		if err != nil {
 			if errors.Is(err, sql.ErrNoRows) {
-				utils.WriteJSON(w, http.StatusUnauthorized, utils.Envelope{"error": "token expired or invalid"})
+				m.unauthorized(w, "token expired or invalid")
 				return
 			}
-			utils.WriteJSON(w, http.StatusUnauthorized, utils.Envelope{"error": "invalid token"})
+			m.unauthorized(w, "invalid token")
 			return
 		}
 
@@ -75,7 +83,7 @@ func (m *Middleware) RequireCustomer(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		customer := GetCustomer(r)
 		if customer == anonymousCustomer {
-			utils.WriteJSON(w, http.StatusUnauthorized, utils.Envelope{"error": "you must be logged in to access this route"})
+			m.unauthorized(w, "you must be logged in to access this route")
 			return
 		}
 

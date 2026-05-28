@@ -12,35 +12,33 @@ import (
 )
 
 func main() {
-	type config struct {
-		port int
+	if err := run(); err != nil {
+		fmt.Fprintf(os.Stderr, "startup failed: %v\n", err)
+		os.Exit(1)
 	}
-	var cfg config
-	flag.IntVar(&cfg.port, "port", 4210, "Server port")
+}
+
+func run() error {
+	var port int
+	flag.IntVar(&port, "port", 4210, "Server port")
 	flag.Parse()
 
-	addr := fmt.Sprintf(":%d", cfg.port)
+	addr := fmt.Sprintf(":%d", port)
 
-	app, err := app.NewApplication()
+	application, err := app.NewApplication()
 	if err != nil {
-		panic(err)
+		return err
 	}
-	defer app.DB.Close()
+	defer func() { _ = application.DB.Close() }()
 
-	r := routes.SetupRoutes(app)
 	server := &http.Server{
 		Addr:         addr,
-		Handler:      r,
+		Handler:      routes.SetupRoutes(application),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
 	}
 
-	app.Logger.Info("Starting server", slog.String("addr", addr))
-
-	err = server.ListenAndServe()
-	if err != nil {
-		app.Logger.Error(err.Error())
-		os.Exit(1)
-	}
+	application.Logger.Info("Starting server", slog.String("addr", addr))
+	return server.ListenAndServe()
 }
