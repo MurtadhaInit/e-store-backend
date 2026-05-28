@@ -14,7 +14,9 @@ scan:
 
 vulnerability:
   ignore-unfixed: true # nothing actionable until a fix exists upstream
-  type:
+
+pkg:
+  types: # which package sources to scan for vulnerabilities
     - os
     - library
 
