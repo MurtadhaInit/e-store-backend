@@ -1,6 +1,8 @@
 [tools]
+go = "1.26"
 air = "latest"
 golangci-lint = "2.12.2"
 sqlc = "1.31.1"
 "aqua:pressly/goose" = "latest"
 "pipx:sqlfluff" = "latest"
+actionlint = "latest"
